@@ -50,13 +50,6 @@ gulp.task('posts', function() {
 
             return content.attributes;
         }))
-        //.pipe(plugins.markdown_it({
-        //    preset: 'commonmark'
-        //}))
-        //.pipe(plugins.tap(function (file,t) {
-        //    console.log(file.data.title_slug);
-        //    return t.through(plugins.rename, [file.data.title_slug.concat('.md')]);
-        //}))
         .pipe(gulp.dest('./public/posts'));
 
     stream.on('end', function() {
@@ -70,7 +63,8 @@ gulp.task('posts', function() {
 });
 
 gulp.task('index', ['posts'], function() {
-    return gulp.src('./source/jade/index.jade')
+    var posts = JSON.parse(fs.readFileSync("posts_metadata.json", "utf8"));
+    return gulp.src(paths.index)
         .pipe(plugins.jade({
             locals: {}
         }))
@@ -80,3 +74,7 @@ gulp.task('index', ['posts'], function() {
 
 gulp.task('default', ['sass', 'index']);
 
+gulp.task('watch', function() {
+    gulp.watch([paths.index, paths.posts], ['index']);
+    gulp.watch(paths.sass, ['sass']);
+});
