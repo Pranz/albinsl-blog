@@ -7,4 +7,16 @@ html
 
         link(href='/bootstrap/css/bootstrap.min.css', rel='stylesheet')
         link(href='/css/style.css', rel='stylesheet')
-    body!=post_body
+    body
+        .container.article-container
+            .row.article-row
+                article.col-md-8
+                    h1=title
+                    .date=dateformat(date, 'dddd dS -- mmmm yyyy')
+                    !=body
+                aside.col-md-4.aside
+                    h2 Navigering
+                    nav
+                        ul
+                            li: a(href="/") Hem
+                            li: a(href="/kontakt") Kontakt

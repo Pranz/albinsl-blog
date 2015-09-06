@@ -2,8 +2,34 @@
 extends layout
 
 block content
+    .container.header
+        .left-header
+            h1 Albins blogg
+            .header-appendix.grey-text: i En del av wunderkinder-nätverket
+        .right-header
+            a.header-item Yeah
+            a.header-item Truism
+    .full-width
+        .black
+            .container.light-grey-text.about: .row: .col-md-8
+                div
+                    .profile-img-container
+                    h2 Om mig
+                    p.
+                        Tjo jag är en jävligt awesome dude som skatear, spelar gitarr och haffar guzz.
+                        Denna blogg är en samlingsplats för allt möjligt, men förhoppningsvid en del längre artiklar
+                        rörande filosofi, politik och musik. Förövrigt är det fantastiskt -- bla bla bla.
     .container
-        h1 Albins blog
-        p.
-            Detta är en blogg till albin, skapad med gulp, sass, jade och markdown.
-            HUhuhuhuhu.
+        .row: .col-md-6
+            for post in posts
+                .post
+                    .post-title-container
+                        h3
+                            a(href!=('/posts/').concat(post.title_slug))
+                                =post.title
+                            span.en-dash --
+                            .date=dateformat(post.date, 'yyyy-mm-dd')
+                    !=post.body
+                    if post.title != posts[posts.length-1].title
+                        hr
+
