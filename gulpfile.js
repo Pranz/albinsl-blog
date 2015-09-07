@@ -42,11 +42,11 @@ gulp.task('posts', function() {
     var stream = gulp.src([paths.posts].concat(ignores))
         .pipe(plugins.data(function (file) {
             var content = fm(String(file.contents));
-            content.attributes.title_slug = slug(content.attributes.title);
+            content.attributes.title_slug = slug(content.attributes.title).concat('.html');
             posts_metadata.push(content.attributes);
             content.attributes.body = markdown.render(content.body);
             content.attributes.dateformat = dateformat;
-            file.path = file.path.split('/').slice(0,-1).join('/').concat('/').concat(content.attributes.title_slug).concat('.html');
+            file.path = file.path.split('/').slice(0,-1).join('/').concat('/').concat(content.attributes.title_slug);
 
             //render jade and markdown and typeset
             file.contents = new Buffer(typeset(render_post(content.attributes)));
